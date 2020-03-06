@@ -5,10 +5,12 @@ import time
 import json
 import os
 
-# Class to help organize, log, and update collected network data
+# Class to help collect, log, and update data
 class network_data(object):
-    def __init__(self, ip_address):
+    def __init__(self, ip_address, name=None):
         self.address = ip_address
+        self.name = name
+
         self.packets = []  # All sent packets and at what time they were sent
 
         self.success = 0  # How many packets were successfully sent
@@ -16,9 +18,8 @@ class network_data(object):
 
         self.avg_latency = 0  # Average latency of successfull packets
 
-    # Method to update existing data
+    # Updates existing data
     def add(self, data):
-        total_latency = 0
         for latency, time in data:
             self.packets.append((latency, time))
 
@@ -27,10 +28,9 @@ class network_data(object):
                 continue
 
             self.success += 1
-            total_latency += latency
+            self.avg_latency += (latency - self.avg_latency) / self.success
 
-        self.avg_latency += (total_latency - self.avg_latency) / self.success
-
+    # Collects connection data using ping and self.address
     def collect(self, n_times=5, packet_size=64):
         response = ping(self.address, count=n_times, size=packet_size)
 
@@ -55,13 +55,13 @@ def load_address():
 
 def main():
     info = load_address()
+    collectors = [network_data(ip_address, name) for name, ip_address in info.items()]
     while True:
-        for name, address in info.items():
-            data = extract_from_ping(address)
-            avg = data["avg"]
-            loss = data["loss"]
-
-            print(f"{name} -> Average Latency: {avg:.2f} | Packet Loss: {loss:.2f}%")
+        for c in collectors:
+            c.collect()
+            print(
+                f"{c.name} -> Average Latency: {c.avg_latency:.2f} | Packet Loss: {c.loss:.2f}%"
+            )
 
         time.sleep(1)
         os.system("clear")
