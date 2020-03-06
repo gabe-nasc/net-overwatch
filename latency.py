@@ -1,6 +1,34 @@
+from datetime import datetime
 from pythonping import ping
 
+import time
 import json
+import os
+
+# Class to help organize, log, and update collected network data
+class network_data(object):
+    def __init__(self, *args):
+        self.packets = []  # All sent packets and at what time they were sent
+
+        self.success = 0  # How many packets were successfully sent
+        self.loss = 0  # How many packets were lost
+
+        self.avg_latency = 0  # Average latency of successfull packets
+
+    # Method to update existing data
+    def add(self, data):
+        total_latency = 0
+        for latency, time in data:
+            self.packets.append((latency, time))
+
+            if latency == -1:
+                self.loss += 1
+                continue
+
+            self.success += 1
+            total_latency += latency
+
+        self.avg_latency += (total_latency - self.avg_latency) / self.success
 
 
 def load_address():
@@ -34,7 +62,8 @@ def main():
 
             print(f"{name} -> Average Latency: {avg:.2f} | Packet Loss: {loss:.2f}%")
 
-        break
+        time.sleep(1)
+        os.system("clear")
 
 
 if __name__ == "__main__":
