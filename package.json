@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/gammaliel/net-overwatch#readme",
   "dependencies": {
+    "axios": "^0.19.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jjg-ping": "^1.0.3",
