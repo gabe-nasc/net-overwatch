@@ -15,25 +15,61 @@ const getLatency = function(host) {
   });
 };
 
+function transformData(data) {
+  var avg = 0;
+  var loss = 0;
+  var successes = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i] != -1) {
+      successes += 1;
+      avg += (data[i] - avg) / successes;
+    } else {
+      loss += 1;
+    }
+  }
+
+  for (let i = 0; i < successes.length; i++) {
+    avg += (successes[i] - avg) / i + 1;
+  }
+
+  return [avg, loss, successes];
+}
+
 // Still gotta think of a description for this one [0]
 async function managePings(hosts) {
+  let responses = {};
+
   for (let i = 0; i < hosts.length; i++) {
-    try {
-      const response = await getLatency(hosts[i]);
-      console.log(hosts[i] + " : " + response);
-    } catch (err) {
-      console.log(hosts[i] + " went apeshit");
+    responses[hosts[i]] = [];
+  }
+
+  for (let i = 0; i < 60; i++) {
+    console.log("i: " + i);
+
+    for (let j = 0; j < hosts.length; j++) {
+      try {
+        const response = await getLatency(hosts[j]);
+        responses[hosts[j]].push(response);
+        console.log(`${i} - ${hosts[j]}: ${response}`);
+      } catch (err) {
+        console.log(`${i} - ${hosts[j]}: Falhou`);
+        responses[hosts[j]].push(-1);
+      }
     }
+    await new Promise(r => setTimeout(r, 500));
+  }
+
+  for (let i = 0; i < hosts.length; i++) {
+    console.log(transformData(responses[hosts[i]]));
   }
 }
 
 // [1]
 async function main() {
-  while (1) {
-    console.log("wut");
-    pingAddresses(hosts);
-    await new Promise(r => setTimeout(r, 1000));
-  }
+  // while (1) {
+  managePings(hosts);
+  // }
 }
 
 main();

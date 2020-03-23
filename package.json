@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/gammaliel/net-overwatch#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jjg-ping": "^1.0.3",
-    "mongoose": "^5.9.3"
+    "mongoose": "^5.9.3",
+    "require-dir": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
