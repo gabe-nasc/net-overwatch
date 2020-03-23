@@ -1,14 +1,20 @@
 var ping = require("jjg-ping");
 var axios = require("axios");
 
-const hosts = ["1.1.1.1", "192.168.20.1", "google.com:81", "globo.com"];
-// const hosts = ["1.1.1.1"];
-
 const sessionStartTime = new Date();
 const sessionId = {};
 
+var hosts = [];
 var isNewSession = true;
 
+// Get hosts from database
+async function getHosts() {
+  const response = await axios.get("http://localhost:3001/api/hosts");
+
+  for (let i = 0; i < response.data.length; i++) {
+    hosts.push(response.data[i].ipAddress);
+  }
+}
 // Save a session to a database
 async function saveSessionToDB(loss, total, avg, ip) {
   const data = {
@@ -107,6 +113,9 @@ async function managePings(hosts) {
 
 // [1]
 async function main() {
+  await getHosts();
+  console.log(hosts);
+
   // while (1) {
   managePings(hosts);
   // }
