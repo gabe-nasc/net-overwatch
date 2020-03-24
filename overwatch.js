@@ -2,10 +2,10 @@ var ping = require("jjg-ping");
 var axios = require("axios");
 
 const sessionStartTime = new Date();
-const sessionId = {};
+const sessionId = {}; // Database ID for the current session and its associated IP Addresses
 
 var hosts = [];
-var sessionsData = {};
+var sessionsData = {}; // Local storage of some session data
 var packetsSent = 0;
 var isNewSession = true;
 
@@ -17,6 +17,7 @@ async function getHosts() {
     hosts.push(response.data[i].ipAddress);
   }
 }
+
 // Save a session to a database
 async function saveSessionToDB(loss, total, avg, ip) {
   const data = {
@@ -30,24 +31,23 @@ async function saveSessionToDB(loss, total, avg, ip) {
     averageLatency: avg
   };
 
+  // If session just started, create a new document in Database, otherwise update the existing one
   if (isNewSession) {
     const response = await axios.post(
       "http://localhost:3001/api/sessions",
       data
     );
 
-    // resolve(response);
     sessionId[ip] = response.data["_id"];
   } else {
     const response = await axios.put(
       `http://localhost:3001/api/sessions/${sessionId[ip]}`,
       data
     );
-    // resolve(response);
   }
 }
 
-// Pings the provided IP Address
+// Ping the provided IP Address
 const getLatency = function(host) {
   return new Promise((resolve, reject) => {
     ping.system.ping(host, function(latency, status) {
@@ -60,6 +60,7 @@ const getLatency = function(host) {
   });
 };
 
+// Manipulate provided session data into something valid for the database
 function prepareData(packets, ip, total) {
   var avg = 0;
   var loss = 0;
@@ -89,10 +90,11 @@ function prepareData(packets, ip, total) {
   return [loss, total, avg, ip];
 }
 
-// Still gotta think of a description for this one [0]
+// Coordinate calls for getLatency and saveSessionToDB
 async function managePings(hosts, timesToPing) {
   let responses = {};
 
+  // Create and empty list to store packets gather for each host
   for (let i = 0; i < hosts.length; i++) {
     responses[hosts[i]] = [];
   }
@@ -103,14 +105,14 @@ async function managePings(hosts, timesToPing) {
         const response = await getLatency(hosts[j]);
         responses[hosts[j]].push(response);
       } catch (err) {
-        responses[hosts[j]].push(-1);
+        responses[hosts[j]].push(-1); // -1 represents a failed attempt to ping
       }
     }
     await new Promise(r => setTimeout(r, 500));
   }
 
   packetsSent += timesToPing;
-  console.log(packetsSent);
+  // console.log(packetsSent);
   for (let i = 0; i < hosts.length; i++) {
     try {
       const response = await saveSessionToDB(
@@ -123,7 +125,7 @@ async function managePings(hosts, timesToPing) {
   isNewSession = false;
 }
 
-// [1]
+// Not sure it needs a comment
 async function main() {
   await getHosts();
   console.log(`Pinging to ${hosts}`);
