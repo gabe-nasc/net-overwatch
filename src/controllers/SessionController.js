@@ -22,7 +22,7 @@ module.exports = {
   },
 
   async update(req, res) {
-    const session = await Host.findByIdAndUpdate(req.params.id, req.body, {
+    const session = await Session.findByIdAndUpdate(req.params.id, req.body, {
       new: true
     });
 
