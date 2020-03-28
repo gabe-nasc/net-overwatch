@@ -10,7 +10,7 @@ module.exports = {
   },
 
   async show(req, res) {
-    const session = await Session.find(req.params.id);
+    const session = await Session.findById(req.params.id);
 
     return res.json(session);
   },
@@ -27,5 +27,17 @@ module.exports = {
     });
 
     return res.json(session);
+  },
+
+  async current(req, res) {
+    const lastSession = await Session.findOne()
+      .sort({ _id: -1 })
+      .limit(1);
+
+    const sessions = await Session.find({
+      startTime: lastSession.startTime
+    });
+
+    return res.json(sessions);
   }
 };

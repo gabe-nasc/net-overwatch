@@ -108,7 +108,7 @@ async function managePings(hosts, timesToPing) {
         responses[hosts[j]].push(-1); // -1 represents a failed attempt to ping
       }
     }
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 250));
   }
 
   packetsSent += timesToPing;
@@ -131,7 +131,7 @@ async function main() {
   console.log(`Pinging to ${hosts}`);
 
   while (1) {
-    await managePings(hosts, 60);
+    await managePings(hosts, 30);
     // console.log("Gas Gas Gas");
     // console.log(sessionId);
   }

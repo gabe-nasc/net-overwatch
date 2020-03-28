@@ -10,9 +10,6 @@ app.use(express.json());
 app.use(cors());
 
 const { user, pwd } = config["database"];
-console.log(
-  `mongodb+srv://${user}:${pwd}@net-overwatch-so0e8.gcp.mongodb.net/test?retryWrites=true&w=majority`
-);
 
 mongoose.connect(
   `mongodb+srv://${user}:${pwd}@net-overwatch-so0e8.gcp.mongodb.net/test?retryWrites=true&w=majority`,
