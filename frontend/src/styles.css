@@ -22,9 +22,7 @@ div#main-box {
   width: 100%;
 }
 
-div.column {
-  /* width: 45%; */
-  /* height: 90%; */
+div.row {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -36,10 +34,16 @@ div.column {
   margin-bottom: 10px;
 }
 
-div#left-column {
+div#upper-row {
   background-color: #333333;
 }
 
-div#right-column {
-  background-color: #5c5a5c;
+div#middle-row {
+  background-color: pink;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
 }

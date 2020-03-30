@@ -11,8 +11,8 @@ routes.put("/hosts/:id", HostController.update);
 
 routes.get("/sessions", SessionController.index);
 routes.get("/sessions/:id", SessionController.show);
-routes.get("/current", SessionController.current);
 routes.post("/sessions", SessionController.store);
 routes.put("/sessions/:id", SessionController.update);
 
+routes.get("/current", SessionController.current);
 module.exports = routes;
