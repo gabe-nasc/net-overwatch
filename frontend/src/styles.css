@@ -7,7 +7,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #ffffff;
+  background: #d8cfe3;
   color: #333333;
 }
 
@@ -33,7 +33,7 @@ div#upper-row {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  background-color: #9c89b3;
+  /* background-color: #9c89b3; */
   border-radius: 10px;
 }
 
@@ -43,6 +43,10 @@ div#middle-row {
   border-radius: 10px;
   background-color: #9c89b3;
   align-content: center;
+  border: solid;
+  border-width: 3px;
+  border-color: #7e6c91;
+  /* border-radius: 10px; */
 }
 
 table {
@@ -52,11 +56,20 @@ table {
   width: 100%;
 }
 
+th {
+  font-weight: bold;
+  background-color: #7e6c91;
+}
+
+td {
+  background-color: #9384a3;
+}
 table,
 th,
 td {
+  color: #ffffff;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid #7e6c91;
   border-collapse: collapse;
 }
 

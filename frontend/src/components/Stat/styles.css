@@ -5,11 +5,12 @@ div.sub-box {
   flex: 1;
   margin: 10px;
   border: solid;
-  border-width: 1px;
-  border-color: #ffffff;
+  border-width: 3px;
+  border-color: #7e6c91;
   border-radius: 10px;
   height: 120px;
   min-width: 280px;
+  background-color: #9384a3;
 }
 
 div.sub-box ul {

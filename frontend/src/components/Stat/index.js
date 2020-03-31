@@ -4,16 +4,35 @@ import React from "react";
 import "./styles.css";
 
 function Stat({ session }) {
+  function convertDate(date) {
+    const dateObj = new Date(date);
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric"
+    };
+
+    return dateObj.toLocaleDateString("pt-BR", options);
+  }
   return (
     <div className="sub-box">
       <h1>{session.ipAddress}</h1>
       <ul>
         <li>
-          Average Latency: {Math.round(session.averageLatency * 100) / 100}
+          <b>Average Latency:</b>{" "}
+          {Math.round(session.averageLatency * 100) / 100}
         </li>
-        <li>Running Since: {session.startTime}</li>
-        <li>Total Packets Sent: {session.totalPackets}</li>
-        <li>Packet Loss: {session.packetLoss}</li>
+        <li>
+          <b>Running Since:</b> {convertDate(session.startTime)}
+        </li>
+        <li>
+          <b>Total Packets Sent:</b> {session.totalPackets}
+        </li>
+        <li>
+          <b>Packet Loss:</b> {session.packetLoss}
+        </li>
       </ul>
     </div>
   );

@@ -20,7 +20,7 @@ function History({ session }) {
       <td>{convertDate(session.startTime)}</td>
       <td>{convertDate(session.endTime)}</td>
       <td>{session.ipAddress}</td>
-      <td>{session.averageLatency}</td>
+      <td>{Math.round(session.averageLatency * 100) / 100}</td>
       <td>{session.packetLoss}</td>
       <td>{session.totalPackets}</td>
     </tr>
