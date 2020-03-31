@@ -25,6 +25,7 @@ function App() {
   useEffect(() => {
     async function fetchSessions() {
       const sessions = await axios.get("http://localhost:3001/api/sessions");
+      sessions.data.sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
       setSessions(sessions.data);
     }
     fetchSessions();
@@ -52,7 +53,7 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {sessions.map(session => (
+              {sessions.slice(0, 10).map(session => (
                 <History key={session._id} session={session} />
               ))}
             </tbody>
