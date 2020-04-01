@@ -19,3 +19,18 @@ header img {
 header h3 {
   font-size: 18px;
 }
+
+header input {
+  position: absolute;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  padding: 5px;
+  margin-right: 10px;
+  border: solid #fff;
+  border-radius: 50%;
+}
+
+header input:hover {
+  background-color: #9c89b3;
+}

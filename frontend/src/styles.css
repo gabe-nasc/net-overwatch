@@ -40,13 +40,23 @@ div#upper-row {
 div#middle-row {
   overflow-x: auto;
   padding: 10px;
-  border-radius: 10px;
   background-color: #9c89b3;
   align-content: center;
   border: solid;
   border-width: 3px;
   border-color: #7e6c91;
+  border-radius: 10px;
   /* border-radius: 10px; */
+}
+
+div#bottom-row {
+  display: flex;
+  padding: 10px;
+  background-color: #9c89b3;
+  border: solid;
+  border-width: 3px;
+  border-color: #7e6c91;
+  border-radius: 10px;
 }
 
 table {

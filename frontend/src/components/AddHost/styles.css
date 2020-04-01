@@ -1,0 +1,12 @@
+div#form-container h1 {
+  font-size: 20px;
+  color: #ffffff;
+  margin: 5px;
+}
+
+div#form-container input {
+  margin: 10px;
+  border-color: #c9c9c9;
+  padding: 5px;
+  border-radius: 5px;
+}

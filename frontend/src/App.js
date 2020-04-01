@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import History from "./components/History";
+import AddHost from "./components/AddHost";
 import Header from "./components/Header";
 import Stat from "./components/Stat";
 
@@ -58,6 +59,9 @@ function App() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="row" id="bottom-row">
+          <AddHost />
         </div>
       </div>
     </div>
