@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import arrow from "./arrow.svg";
 
 import "./styles.css";
 
@@ -53,7 +54,14 @@ function AddHost() {
             onChange={e => setDesc(e.target.value)}
           />
         </div>
-        <button type="submit">Submit</button>
+        <input
+          type="image"
+          src={arrow}
+          border="0"
+          alt="Submit"
+          id="submitArrow"
+        />
+        {/* <button type="submit">Submit</button> */}
       </form>
     </div>
   );
